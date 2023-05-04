@@ -95,8 +95,8 @@ const Home = () => {
                                 {
                                     dailyArticle.articles.length >= 2 ?
                                         (
-                                            dailyArticle.articles.slice(0, 2).map((article) => (
-                                                <div className="p-4">
+                                            dailyArticle.articles.slice(0, 2).map((article, index) => (
+                                                <div key={index} className="p-4">
                                                     <img src={article.urlToImage} alt="News Thumbnail" className='w-full h-48 bg-cover hover:opacity-95' />
                                                     <h2 className="text-lg font-bold mb-2">{article.title}</h2>
                                                     <p className="text-sm">{article.description}</p>
