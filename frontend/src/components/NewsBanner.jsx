@@ -8,7 +8,7 @@ const NewsBanner = ({ mainBanner, data }) => {
             {
                 mainBanner ?
                     <>
-                        <Link to={'/news'}>
+                        <Link to={`/news/${data.id}`}>
                             {/* bg-[url('https://via.placeholder.com/600x300') */}
                             {/* style={{ backgroundImage: `url(${data['urlToImage']})` }} */}
                             <div className="relative col-span-1 w-full h-80 bg-cover hover:opacity-95" style={{ backgroundImage: `url(${data['urlToImage']})` }} >

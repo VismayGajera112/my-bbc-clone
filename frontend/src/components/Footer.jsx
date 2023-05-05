@@ -20,8 +20,6 @@ const Footer = () => {
                     <span>|</span>
                     <Link to={'/weather'}>Weather</Link>
                     <span>|</span>
-                    <Link to={'/sports'}>Sports</Link>
-                    <span>|</span>
                     <Link to={'/IndiaNews'}>India News</Link>
                 </div>
                 <hr className='my-2' />

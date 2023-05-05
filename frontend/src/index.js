@@ -6,12 +6,15 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createContext } from 'react';
 import { useState } from 'react';
 
-export const Context = createContext({ isAuthenticated: false })
+export const Context = createContext()
 
 const AppWrapper = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState({})
+  const [topHeadlines, setTopHeadlines] = useState({})
+  const [countryNews, setCountryNews] = useState({})
+  const [dailyArticle, setDailyArticle] = useState({})
 
   return (
     <Context.Provider
@@ -22,7 +25,13 @@ const AppWrapper = () => {
           loading,
           setLoading,
           user,
-          setUser
+          setUser,
+          topHeadlines,
+          setTopHeadlines,
+          countryNews,
+          setCountryNews,
+          dailyArticle,
+          setDailyArticle
         }
       }
     >

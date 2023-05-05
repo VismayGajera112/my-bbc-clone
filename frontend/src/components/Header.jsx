@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { SiBbc } from 'react-icons/si'
 import { FaHome, FaNewspaper, FaUser } from 'react-icons/fa'
-import { MdSportsCricket, MdLogout } from "react-icons/md";
+import { MdLogout } from "react-icons/md";
 import { TiWeatherCloudy } from "react-icons/ti";
 import { Link } from 'react-router-dom'
 import axios from 'axios'
@@ -12,7 +12,7 @@ import { Context } from '../index';
 
 const Header = () => {
 
-    const { setIsAuthenticated } = useContext(Context)
+    const { setIsAuthenticated, setTopHeadlines, setCountryNews, setDailyArticle } = useContext(Context)
 
     const handleLogout = async () => {
         await axios.get('/users/logout', {
@@ -24,6 +24,9 @@ const Header = () => {
             .then((response) => {
                 if (response.data.status === 200) {
                     Cookies.remove('authToken')
+                    setTopHeadlines({})
+                    setCountryNews({})
+                    setDailyArticle({})
                     setIsAuthenticated(false)
                     toast.success(response.data.message)
                 } else {
@@ -58,12 +61,6 @@ const Header = () => {
                     <div className='flex gap-2'>
                         <FaNewspaper className='text-2xl' />
                         <span>News</span>
-                    </div>
-                </Link>
-                <Link to="/sports" className="ml-4 p-2 hover:border-b-2 border-violet-500">
-                    <div className='flex gap-2'>
-                        <MdSportsCricket className='text-2xl' />
-                        <span>Sports</span>
                     </div>
                 </Link>
                 <Link to="/weather" className="ml-4 p-2 hover:border-b-2 border-red-500">

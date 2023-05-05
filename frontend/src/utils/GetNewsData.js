@@ -6,11 +6,6 @@ const getNewsData = async () => {
     return response.data
 }
 
-// const getSportsData = async () => {
-//     const response = await axios.get('/news/getSportsNews')
-//     return response.data
-// }
-
 const getCountryNews = async () => {
     const response = await axios.get('/news/getSpecificCountryNews')
     return response.data

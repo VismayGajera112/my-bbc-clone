@@ -10,10 +10,10 @@ import { Context } from '..';
 
 const Home = () => {
 
-    const [newsData, setNewsData] = useState({})
-    const [countryNews, setCountryNews] = useState({})
-    const [dailyArticle, setDailyArticle] = useState({})
-    const { isAuthenticated, loading, setLoading } = useContext(Context)
+    const { isAuthenticated, loading, setLoading, topHeadlines, setTopHeadlines, countryNews,
+        setCountryNews,
+        dailyArticle,
+        setDailyArticle } = useContext(Context)
 
     const payload = jwt_decode(Cookies.get('authToken'))
 
@@ -25,15 +25,22 @@ const Home = () => {
         const result = await getNewsData();
         const newsCountry = await getCountryNews();
         const articles = await getArticles()
-        setNewsData(result)
+        setTopHeadlines(result)
         setCountryNews(newsCountry)
         setDailyArticle(articles)
         setLoading(true)
     }
 
     useEffect(() => {
-        getData().then(() => console.log("Data fetched"))
-    }, []);
+        if (Object.keys(topHeadlines).length === 0 && Object.keys(countryNews).length === 0 && Object.keys(dailyArticle).length === 0) {
+            getData().then(() => console.log("Data fetched"))
+        } else {
+            console.log("Data is already present")
+            console.log("Top: ", topHeadlines)
+            console.log("Country: ", countryNews)
+            console.log("daily: ", dailyArticle)
+        }
+    }, [topHeadlines]);
 
     if (!isAuthenticated) return <Navigate to={"/login"} />
 
@@ -49,28 +56,28 @@ const Home = () => {
                         </div>
                         <div className="grid grid-cols-2 gap-4 my-4">
                             {/* <!-- First column with big image --> */}
-                            <NewsBanner mainBanner={true} data={newsData['articles'][0]} />
+                            <NewsBanner mainBanner={true} data={topHeadlines['articles'][0]} />
 
                             {/* <!-- Second column with 2x2 layout --> */}
                             <div className="grid grid-cols-2 grid-rows-2 gap-2">
                                 {/* <!-- Row 1, Column 1 --> */}
                                 <div className="col-span-1 row-span-1">
-                                    <NewsBanner mainBanner={false} data={newsData['articles'][1]} />
+                                    <NewsBanner mainBanner={false} data={topHeadlines['articles'][1]} />
                                 </div>
 
                                 {/* <!-- Row 1, Column 2 --> */}
                                 <div className="col-span-1 row-span-1">
-                                    <NewsBanner mainBanner={false} data={newsData['articles'][2]} />
+                                    <NewsBanner mainBanner={false} data={topHeadlines['articles'][2]} />
                                 </div>
 
                                 {/* <!-- Row 2, Column 1 --> */}
                                 <div className="col-span-1 row-span-1">
-                                    <NewsBanner mainBanner={false} data={newsData['articles'][3]} />
+                                    <NewsBanner mainBanner={false} data={topHeadlines['articles'][3]} />
                                 </div>
 
                                 {/* <!-- Row 2, Column 2 --> */}
                                 <div className="col-span-1 row-span-1">
-                                    <NewsBanner mainBanner={false} data={newsData['articles'][4]} />
+                                    <NewsBanner mainBanner={false} data={topHeadlines['articles'][4]} />
                                 </div>
                             </div>
                         </div>
@@ -81,7 +88,7 @@ const Home = () => {
                             <aside className="w-full float-left">
 
                                 {/* News */}
-                                <NewsRow rowName={"News"} newsdata={newsData['articles']} />
+                                <NewsRow rowName={"News"} newsdata={topHeadlines['articles']} />
 
                                 {/* User Country Specific news */}
                                 <div className='my-4'>
